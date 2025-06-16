@@ -7,7 +7,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store/store'
 import { signupUser } from '../store/auth-slice'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
+import { redirect } from 'next/navigation'
+
 import Link from 'next/link'
 
 type SignupFormInputs = {
@@ -19,7 +20,6 @@ type SignupFormInputs = {
 
 const SignupForm = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
   const { loading } = useSelector((state: RootState) => state.auth)
 
   const {
@@ -32,7 +32,7 @@ const SignupForm = () => {
     const result = await dispatch(signupUser(data))
     if (signupUser.fulfilled.match(result)) {
       toast.success('OTP sent to your email!');
-      router.push('login');
+      redirect('/login');
     } else {
       toast.error(result.payload as string)
     }

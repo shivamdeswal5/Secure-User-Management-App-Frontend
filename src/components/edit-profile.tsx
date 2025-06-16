@@ -12,8 +12,9 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "../store/store";
 import { updateUserProfile } from "../store/profile-slice";
-import { redirect, useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useState } from "react";
+import { toast } from 'react-toastify'
 
 type EditProfileForm = {
   firstName: string;
@@ -23,7 +24,6 @@ type EditProfileForm = {
 const EditProfileComponent = () => {
 
   const dispatch = useDispatch<AppDispatch>();
-  const router = useRouter();
   const { profile, loading } = useSelector((state: RootState) => state.profile);
 
   const [file, setFile] = useState<File | null>(null);
@@ -41,7 +41,8 @@ const EditProfileComponent = () => {
 
   const onSubmit = async (data: EditProfileForm) => {
     await dispatch(updateUserProfile({ ...data, file }));
-    router.push("/profile");
+    toast.success('Pofile has been updated');
+    redirect('/profile');
   };
 
   return (

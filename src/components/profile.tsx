@@ -8,6 +8,7 @@ import { Box, Typography, Button, Avatar, CircularProgress } from '@mui/material
 import { useRouter } from 'next/navigation'
 import defaultProfile from '../assets/profile.jpg'
 import { logoutUser } from '../store/auth-slice'
+import { redirect } from 'next/navigation';
 
 const ProfileComponent = () => {
   const dispatch = useDispatch<AppDispatch>()
@@ -20,7 +21,7 @@ const ProfileComponent = () => {
   }, [dispatch])
 
   const handleEdit = () => {
-    router.push('/edit-profile')
+    redirect('/edit-profile');
   }
 
   const handleLogout = () => {
@@ -67,10 +68,10 @@ const ProfileComponent = () => {
       </Box>
 
       <Box textAlign="center" mb={2}>
-        <Typography><strong>Name:</strong> {profile?.firstName || profile?.lastName ? `${profile?.firstName ?? ''} ${profile?.lastName ?? ''}` : 'N/A'}</Typography>
-        <Typography><strong>Email:</strong> {profile?.email || 'N/A'}</Typography>
+        <Typography><b>Name:</b> {profile?.firstName || profile?.lastName ? `${profile?.firstName ?? ''} ${profile?.lastName ?? ''}` : 'N/A'}</Typography>
+        <Typography><b>Email:</b> {profile?.email || 'N/A'}</Typography>
         <Typography>
-          <strong>Status:</strong>{' '}
+          <b>Status:</b>{' '}
           <span style={{ color: profile?.accountStatus === 'verified' ? 'green' : 'orange' }}>
             {profile?.accountStatus || 'Unverified'}
           </span>

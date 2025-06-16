@@ -13,8 +13,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '@/store/store'
 import { loginUser, requestOtp } from '@/store/auth-slice'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/navigation'
-
+import { redirect } from 'next/navigation'
 
 interface LoginFormInputs {
   email: string
@@ -25,8 +24,6 @@ interface LoginFormInputs {
 const LoginForm = () => {
   const dispatch = useDispatch<AppDispatch>()
   const { loading } = useSelector((state: RootState) => state.auth)
-  const router = useRouter();
-
   const {
     register,
     handleSubmit,
@@ -39,7 +36,7 @@ const LoginForm = () => {
 
     if (loginUser.fulfilled.match(result)) {
       toast.success(result.payload.message || 'Logged in successfully')
-      router.push('profile');
+      redirect('/profile');
     } else {
       toast.error(result.payload as string)
     }
